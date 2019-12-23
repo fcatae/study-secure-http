@@ -1,7 +1,13 @@
 HTTPS TLS
 ==========
 
-## How to generate self-signed key
+## Keytool: How to generate certificates
+
+    keytool -genkeypair -keystore self.jks -alias self
+
+
+
+## OpenSSL: How to generate self-signed key
 
 Rsa command:
 
@@ -19,3 +25,5 @@ Validate certificate:
 
     openssl x509 -in site.crt -text
 
+
+Create 
