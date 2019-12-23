@@ -13,6 +13,11 @@ https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/
 
     keytool -genkeypair -keystore self.jks -keyalg rsa -alias self
 
+## Use PKCS#12
+
+Use PKCS#12 format (.pfx)
+
+    keytool -genkeypair -keystore cert.pfx -keyalg rsa -alias self -storetype PKCS12
 
 
 ## OpenSSL: How to generate self-signed key
@@ -40,7 +45,7 @@ Debug
 SSL communication broken:
 
     SSL handshake error: no cipher suites in common
-    
+
 Choose one option:
 
 - javax.net.debug=ssl
