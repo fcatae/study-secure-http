@@ -1,9 +1,17 @@
 HTTPS TLS
 ==========
 
+## Algorithms
+
+Preferred:
+
+ECDHE-ECDSA-AES256-GCM-SHA384: Elliptic Curve Diffie–Hellman (ECDH), Elliptic Curve Digital Signature Algorithm (ECDSA), AES 256 in Galois Counter Mode, (AES256-GCM), SHA384
+
+https://www.acunetix.com/blog/articles/tls-ssl-cipher-hardening/
+
 ## Keytool: How to generate certificates
 
-    keytool -genkeypair -keystore self.jks -alias self
+    keytool -genkeypair -keystore self.jks -keyalg rsa -alias self
 
 
 
@@ -26,4 +34,15 @@ Validate certificate:
     openssl x509 -in site.crt -text
 
 
-Create 
+Debug
+=======
+
+SSL communication broken:
+
+    SSL handshake error: no cipher suites in common
+    
+Choose one option:
+
+- javax.net.debug=ssl
+- javax.net.debug=all
+
