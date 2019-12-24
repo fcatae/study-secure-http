@@ -10,7 +10,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		<http:listener-connection host="0.0.0.0" port="8082" protocol="HTTPS">
 			<tls:context >
 				<tls:trust-store insecure="true" />
-				<tls:key-store type="pkcs12" path="cert.pfx" alias="cert" keyPassword="fabricio" password="fabricio"/>
+				<tls:key-store type="jks" path="./server.jks" alias="server" keyPassword="fabricio" password="fabricio"/>
 			</tls:context>
 		</http:listener-connection>
 	</http:listener-config>

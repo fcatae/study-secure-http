@@ -19,6 +19,26 @@ Use PKCS#12 format (.pfx)
 
     keytool -genkeypair -keystore cert.pfx -keyalg rsa -alias self -storetype PKCS12
 
+## Certificate chain
+
+keytool -genkeypair -keystore root.jks -alias root -ext bc:c
+keytool -genkeypair -keystore ca.jks -alias ca -ext bc:c
+keytool -genkeypair -keystore server.jks -alias server
+ 
+keytool -keystore root.jks -alias root -exportcert -rfc > root.pem
+
+keytool -keystore ca.jks -certreq -alias ca > ca.csr
+
+keytool -storepass <storepass> -keystore ca.jks -certreq -alias ca |
+    keytool -storepass <storepass> -keystore root.jks
+    -gencert -alias root -ext BC=0 -rfc > ca.pem
+keytool -keystore ca.jks -importcert -alias ca -file ca.pem
+ 
+keytool -storepass <storepass> -keystore server.jks -certreq -alias server |
+    keytool -storepass <storepass> -keystore ca.jks -gencert -alias ca
+    -ext ku:c=dig,kE -rfc > server.pem
+cat root.pem ca.pem server.pem |
+    keytool -keystore server.jks -importcert -alias server
 
 ## OpenSSL: How to generate self-signed key
 
