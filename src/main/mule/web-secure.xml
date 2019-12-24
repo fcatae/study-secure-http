@@ -27,7 +27,7 @@ http://www.mulesoft.org/schema/mule/crypto http://www.mulesoft.org/schema/mule/c
 		
 		</http:request-connection>
 	</http:request-config>
-	<crypto:jce-config name="Crypto_Jce" doc:name="Crypto Jce" doc:id="f89cc483-cc59-4c36-95de-45ebfa785aed" keystore="keys.jks" password="fabricio" type="JCEKS">
+	<crypto:jce-config name="Crypto_Jce" doc:name="Crypto Jce" doc:id="f89cc483-cc59-4c36-95de-45ebfa785aed" keystore="keys.pfx" password="fabricio" type="PKCS12">
 		<crypto:jce-key-infos >
 			<crypto:jce-asymmetric-key-info keyId="rsa" alias="rsa" password="fabricio" />
 			<crypto:jce-symmetric-key-info keyId="aes" alias="aes" password="fabricio" />
@@ -60,7 +60,7 @@ dw::core::Binaries::toBase64(payload)]]></ee:set-payload>
 	</flow>
 	<flow name="enc2-flow" doc:id="1f5a9603-bdc1-4ce5-b49b-a575358c09b6" >
 		<http:listener doc:name="Listener" doc:id="aa6e6163-9804-41f6-8a9d-85735ba1aae7" config-ref="http_8081" path="/enc"/>
-		<crypto:jce-encrypt doc:name="Jce encrypt" doc:id="ee3dbf3e-f6a2-437a-99bc-97c4cfe9c112" config-ref="Crypto_Jce" algorithm="AES" keyId="aes"/>
+		<crypto:jce-encrypt doc:name="Jce encrypt" doc:id="ee3dbf3e-f6a2-437a-99bc-97c4cfe9c112" config-ref="Crypto_Jce" algorithm="RSA" keyId="rsa"/>
 		<ee:transform doc:name="Transform Message" doc:id="fc38f675-3671-401d-98e8-64f892598eb6" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
@@ -80,7 +80,7 @@ output application/java
 dw::core::Binaries::fromBase64(payload)]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
-		<crypto:jce-decrypt doc:name="Jce decrypt" doc:id="9cac7b8e-0389-43cf-959f-0f63e00b7611" config-ref="Crypto_Jce" algorithm="AES" keyId="aes"/>
+		<crypto:jce-decrypt doc:name="Jce decrypt" doc:id="9cac7b8e-0389-43cf-959f-0f63e00b7611" config-ref="Crypto_Jce" algorithm="RSA" keyId="rsa"/>
 	</flow>
 	<flow name="web-secureFlow1" doc:id="9dcd70b2-6e9e-4bbf-8ecf-8c3a046f959a" >
 		<http:listener doc:name="Listener" doc:id="f023d259-c556-46ab-b38e-14105472ee48" config-ref="http_8081" path="/enc2"/>

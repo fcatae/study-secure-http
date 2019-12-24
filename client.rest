@@ -2,10 +2,10 @@ GET https://localhost:8082/receive
 ###
 GET http://localhost:8081/start
 ###
-POST http://localhost:8081/enc2
+POST http://localhost:8081/enc
 
 Hello44
 ###
-POST http://localhost:8081/dec2
+POST http://localhost:8081/dec
 
-jED/0GPGesHlhs/mNAOCXQ==
+AlQuFQkesDS9kjqeJmsBKbE7pEuqeKNRFISSHTp5iXSp+8Ulfso3xHEQ/pAKgQ+xUNkp9Mfay21vyFFCTliQrAXoI8VpxGKwQF0TJbBMmLOepNRrOIaIVAJckh02mRALSsUzlE01BH0DM4/fxEerVrtenAKwivZ/TZoNt0bgyqFFEyPXAF7/cEw7dS2lssfH9JE22BDbkv+rircDXYzgPVJ/iW+0v5oRYzIBsLlyJHerce+fBcjMedH85lqW42IHPj8CCUgs3vIX5EjZlqRq+GeR1vLSwEN5LaK7Fk9subEzliRVlp1Kdf7t+1ZlY9x/uZ5TRaShAwojmQFqL2fFYg==
