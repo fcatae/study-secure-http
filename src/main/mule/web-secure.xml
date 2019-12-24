@@ -70,6 +70,18 @@ dw::core::Binaries::toBase64(payload)]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
+	<flow name="dec-flow" doc:id="363a1ca1-01a1-42a8-a7b7-a28795b7c1b4" >
+		<http:listener doc:name="Listener" doc:id="65c2dd41-757a-4957-b55f-8f509e71244a" config-ref="http_8081" path="/dec"/>
+		<ee:transform doc:name="Transform Message" doc:id="ec45a3c2-dfc2-4995-9a7d-b2f8946cc74a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+dw::core::Binaries::fromBase64(payload)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<crypto:jce-decrypt doc:name="Jce decrypt" doc:id="9cac7b8e-0389-43cf-959f-0f63e00b7611" config-ref="Crypto_Jce" algorithm="AES" keyId="aes"/>
+	</flow>
 	<flow name="web-secureFlow1" doc:id="9dcd70b2-6e9e-4bbf-8ecf-8c3a046f959a" >
 		<http:listener doc:name="Listener" doc:id="f023d259-c556-46ab-b38e-14105472ee48" config-ref="http_8081" path="/enc2"/>
 		<crypto:jce-encrypt-pbe doc:name="Jce encrypt pbe" doc:id="bb709f3d-e0e0-49f5-9333-65e599aeb150" password="123"/>
@@ -82,5 +94,17 @@ import * from dw::core::Binaries
 toBase64(payload)]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+	</flow>
+	<flow name="web-secureFlow" doc:id="ef9913f5-6dec-4e1d-9467-e0f4f5bcc865" >
+		<http:listener doc:name="Listener" doc:id="cae5c1f2-c5ae-4de7-9358-642591847cb1" config-ref="http_8081" path="/dec2"/>
+		<ee:transform doc:name="Transform Message" doc:id="faecee59-f055-4d50-90cb-4e4eb81c6909" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+dw::core::Binaries::fromBase64(payload)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<crypto:jce-decrypt-pbe doc:name="Jce decrypt pbe" doc:id="aaa26ffd-1d22-4fb0-9b6a-3efe42cfa62a" password="123"/>
 	</flow>
 </mule>

@@ -4,4 +4,8 @@ GET http://localhost:8081/start
 ###
 POST http://localhost:8081/enc2
 
-Hello2
+Hello44
+###
+POST http://localhost:8081/dec2
+
+jED/0GPGesHlhs/mNAOCXQ==
