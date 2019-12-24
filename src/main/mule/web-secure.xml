@@ -9,8 +9,8 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="36238563-55ca-46e0-a975-61471475b1ec" >
 		<http:listener-connection host="0.0.0.0" port="8082" protocol="HTTPS">
 			<tls:context >
-				<tls:trust-store insecure="true" />
-				<tls:key-store type="jks" path="./server.jks" alias="server" keyPassword="fabricio" password="fabricio"/>
+				<tls:trust-store path="ca.jks" password="fabricio" type="jks"/>
+				<tls:key-store type="jks" path="server.jks" alias="server" keyPassword="fabricio" password="fabricio"/>
 			</tls:context>
 		</http:listener-connection>
 	</http:listener-config>
@@ -21,6 +21,7 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 		<http:request-connection protocol="HTTPS" host="localhost" port="8082" >
 			<tls:context >
 				<tls:trust-store path="ca.jks" password="fabricio" type="jks"/>
+				<tls:key-store type="jks" path="client.jks" alias="client" keyPassword="fabricio" password="fabricio" />
 			</tls:context>
 		
 		</http:request-connection>
@@ -40,6 +41,7 @@ output application/json
 	</flow>
 	<flow name="receive-flow" doc:id="cbf6f208-5975-4cff-9641-b42c6e2032d3" >
 		<http:listener doc:name="Listener" doc:id="d315ae90-1ff4-4131-a96a-1d79e13a2b4a" config-ref="HTTP_Listener_config" path="/receive"/>
+		<logger level="INFO" doc:name="Logger" doc:id="cfe9b3e3-dc9c-40ae-ba04-02948ab0f28b" message="#[output application/json --- attributes.clientCertificate]"/>
 		<ee:transform doc:name="Transform Message" doc:id="cb856137-daad-4de3-a649-7efd696bf73c" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
