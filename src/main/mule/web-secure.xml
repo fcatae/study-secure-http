@@ -17,6 +17,14 @@ http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/
 	<http:listener-config name="http_8081" doc:name="HTTP Listener config" doc:id="a42ea6c5-51b4-44b3-8f87-2cc99579cf2d" >
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="26b45a82-d364-463d-8caf-69c2ebb7da03" >
+		<http:request-connection protocol="HTTPS" host="localhost" port="8082" >
+			<tls:context >
+				<tls:trust-store path="ca.jks" password="fabricio" type="jks"/>
+			</tls:context>
+		
+		</http:request-connection>
+	</http:request-config>
 	<flow name="start-flow" doc:id="87183de7-a0a7-4ebd-87de-f542858b227b" >
 		<http:listener doc:name="Listener" doc:id="32da823a-0c1e-4021-8a05-2b9739000297" config-ref="http_8081" path="/start"/>
 		<ee:transform doc:name="Transform Message" doc:id="0bf0ad45-f46c-4592-920f-577662dfaf24" >
@@ -28,6 +36,7 @@ output application/json
 }]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
+		<http:request method="GET" doc:name="Request" doc:id="b2fe636a-a2eb-4532-89db-a00f9e6d96e6" config-ref="HTTP_Request_configuration" path="/receive"/>
 	</flow>
 	<flow name="receive-flow" doc:id="cbf6f208-5975-4cff-9641-b42c6e2032d3" >
 		<http:listener doc:name="Listener" doc:id="d315ae90-1ff4-4131-a96a-1d79e13a2b4a" config-ref="HTTP_Listener_config" path="/receive"/>
