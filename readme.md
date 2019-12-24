@@ -71,3 +71,13 @@ Choose one option:
 - javax.net.debug=ssl
 - javax.net.debug=all
 
+
+# Custom Crypto
+
+Symmetric keys: 
+
+keytool -genseckey -keystore keys.jks -alias aes -keyalg AES -keysize 128 -storetype JCEKS
+
+
+e 128 -storeType JCEKS
+Below are a few additional steps to generate a key.
